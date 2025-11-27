@@ -17,15 +17,15 @@ trip-record-data.page, with the following guidelines:
 4. Extract only data from 2023, January to May, and write it to a Data Lake or similar structure.
 
 5. Create a SQL layer over the extracted data to allow for business teams to query it. For this layer, the following columns must be present:
-  1. **VendorID**
-  2. **passenger\_count**
-  3. **total\_amount**
-  4. **tpep\_pickup\_datetime**
-  5. **tpep\_dropoff\_datetime**
+    1. **VendorID**
+    2. **passenger\_count**
+    3. **total\_amount**
+    4. **tpep\_pickup\_datetime**
+    5. **tpep\_dropoff\_datetime**
    
 7. Using the extracted data answer the following questions, considering all the yellow taxis in the fleet:
-  1. What's the average (total\_amount) value received per month?
-  2. What's the average passenger count (passenger\_count) hourly, in May?
+    1.  What's the average (total\_amount) value received per month?
+    2. What's the average passenger count (passenger\_count) hourly, in May?
 
 8. The code repository for this assignment must have the following structure:
 ifood-case/
