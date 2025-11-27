@@ -17,7 +17,7 @@ trip-record-data.page, with the following guidelines:
 4. Extract only data from 2023, January to May, and write it to a Data Lake or similar structure.
 
 5. Create a SQL layer over the extracted data to allow for business teams to query it. For this layer, the following columns must be present:
-    1. **VendorID**
+    1. **vendorID**
     2. **passenger\_count**
     3. **total\_amount**
     4. **tpep\_pickup\_datetime**
