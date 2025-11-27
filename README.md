@@ -6,8 +6,6 @@
 -------------------------------------------------------------------------
 ## Case requirements
 
-## Objetivo
-
 This technical case have the following requirements:
 
 1. Create a solution to ingest raw data from https://www.nyc.gov/site/tlc/about/tlc-
