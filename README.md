@@ -28,14 +28,15 @@ trip-record-data.page, with the following guidelines:
     2. What's the average passenger count (passenger\_count) hourly, in May?
 
 8. The code repository for this assignment must have the following structure:
-ifood-case/
-├─ src/ # Código fonte da solução
-├─ analysis/ # Scripts/Notebooks com as repostas das
-perguntas
-├─ README.md
-└─ requirements.txt
+```ifood-case/
+  ├─ src/ # Código fonte da solução
+  ├─ analysis/ # Scripts/Notebooks com as repostas das
+  perguntas
+  ├─ README.md
+  └─ requirements.txt
+```
 
-9. Evaluation criteria
+10. Evaluation criteria
 - Code quality and organization
 - Exploratory analysis process
 - Justification for the technical decisions.
