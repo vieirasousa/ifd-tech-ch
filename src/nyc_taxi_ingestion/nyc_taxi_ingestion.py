@@ -1,20 +1,25 @@
-# Creating Core schema to persist semiraw data
-spark.sql("DROP TABLE IF EXISTS ifood_db_ws.core.nyc_yellow_taxi")
-
-spark.sql("""CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_yellow_taxi (
-  vendor_id STRING,
-  tpep_pickup_datetime TIMESTAMP,
-  tpep_dropoff_datetime TIMESTAMP,
-  total_amount FLOAT,
-  passenger_count FLOAT
-)""")
-
 # Imports
 from pyspark.sql.types import StringType, IntegerType
 from pyspark.sql.functions import col, lit, when
 import requests
 import json
 import time
+
+# Creating Core schema to persist semiraw data
+spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.core")
+
+# Creating table, setting descriptions to fill Table and columns metadata for the SQL Catalog
+spark.sql(f"""
+  CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_yellow_taxi_trips (
+    vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
+    tpep_pickup_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was engaged (pickup time).',
+    tpep_dropoff_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was disengaged (dropoff time).',
+    total_amount FLOAT COMMENT 'The final total amount charged to passengers, including taxes, tolls, and other fees. Does not include cash tips.',
+    passenger_count FLOAT COMMENT 'The number of passengers reported in the vehicle.'
+  )
+  USING DELTA
+  COMMENT 'NYC Yellow Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
+""")
 
 # Loading config file 
 with open("/Workspace/Users/arturvieirasousa@gmail.com/ifd-tech-ch/src/config.json", "r") as f:
@@ -66,7 +71,7 @@ while True:
         .withColumn("total_amount", col("total_amount").cast("float")) \
         .withColumn("passenger_count", col("passenger_count").cast("float"))
 
-        ready_to_append.write.mode("append").saveAsTable("ifood_db_ws.core.nyc_yellow_taxi")
+        ready_to_append.write.mode("append").saveAsTable("ifood_db_ws.core.nyc_yellow_taxi_trips")
         
         rows_in_batch = len(data_rows)
 
