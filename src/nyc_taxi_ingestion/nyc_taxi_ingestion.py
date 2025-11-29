@@ -8,7 +8,7 @@ import time
 # Creating Core schema to persist semiraw data
 spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.core")
 
-# Creating table, setting descriptions to fill Table and columns metadata for the SQL Catalog
+# Creating Delta table, setting descriptions to fill Table and columns metadata for the SQL Catalog
 spark.sql(f"""
   CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_yellow_taxi_trips (
     vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
@@ -18,6 +18,7 @@ spark.sql(f"""
     passenger_count FLOAT COMMENT 'The number of passengers reported in the vehicle.'
   )
   USING DELTA
+  LOCATION 'abfss://unity-catalog-storage@dbstoragekr4zrn3dm5wo2.dfs.core.windows.net/2279036150228288/raw/nyc_taxi/'
   COMMENT 'NYC Yellow Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
 """)
 
@@ -70,8 +71,11 @@ while True:
         .withColumn("tpep_dropoff_datetime", col("tpep_dropoff_datetime").cast("timestamp")) \
         .withColumn("total_amount", col("total_amount").cast("float")) \
         .withColumn("passenger_count", col("passenger_count").cast("float"))
-
-        ready_to_append.write.mode("append").saveAsTable("ifood_db_ws.core.nyc_yellow_taxi_trips")
+        
+        # Appending data to both the Data Warehouse and the data lake, to be used as an easy audit source
+        ready_to_append.write \
+            .mode("append") \
+            .saveAsTable("ifood_db_ws.core.nyc_yellow_taxi_trips")
         
         rows_in_batch = len(data_rows)
 
