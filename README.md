@@ -9,7 +9,7 @@
 This technical case has the following requirements:
 
 1. Create a solution to ingest raw data from https://www.nyc.gov/site/tlc/about/tlc-
-trip-record-data.page, with the following guidelines:
+trip-record-data.page , with the following guidelines:
   1. PySpark must be used at some point.
   2. Data must have metadata, using any chosen technology.
   3. Consider there's no tables on the Data Lake, so they will need to be modeled and created.
