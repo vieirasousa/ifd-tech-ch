@@ -6,7 +6,7 @@
 -------------------------------------------------------------------------
 ## Case requirements
 
-This technical case have the following requirements:
+This technical case has the following requirements:
 
 1. Create a solution to ingest raw data from https://www.nyc.gov/site/tlc/about/tlc-
 trip-record-data.page, with the following guidelines:
@@ -42,4 +42,5 @@ trip-record-data.page, with the following guidelines:
 - Justification for the technical decisions.
 - Creative effort on the proposed solution.
 - Clarity while communicating the results.
-  
+
+Information about the environment needed to developed and run this project, the architecture and decisions made can be found on separated docs (**environment.md** and **architecture.md**).
