@@ -4,7 +4,7 @@ from pyspark.sql.functions import *
 # Creating Spark Session
 spark = SparkSession.builder.appName("DataWranglingApp").getOrCreate()
 
-# Loading dataset - We are loading local CSVw files to peform the analysis locally, avoiding cloud storage and computing costs 
+# Loading dataset - We are loading local CSV files to peform the analysis locally, avoiding cloud storage and computing costs 
 yellow_taxi = spark.read.format("csv").option("header", "true").load("./data/2023_yellow_taxi_trip.csv")
 green_taxi = spark.read.format("csv").option("header", "true").load("./data/2023_green_taxi_trip.csv")
 

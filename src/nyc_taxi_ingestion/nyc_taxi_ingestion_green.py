@@ -8,18 +8,18 @@ import time
 # Creating Core schema to persist semiraw data
 spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.core")
 
-# Creating Delta table, setting descriptions to fill Table and columns metadata for the SQL Catalog
+# Creating Delta table, setting descriptions to fill Table and columns metadata for the SQL Catalog, and setting the write location to the data lake
 spark.sql(f"""
-  CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_yellow_taxi_trips (
+  CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_green_taxi_trips (
     vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
-    tpep_pickup_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was engaged (pickup time).',
-    tpep_dropoff_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was disengaged (dropoff time).',
+    lpep_pickup_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was engaged (pickup time).',
+    lpep_dropoff_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was disengaged (dropoff time).',
     total_amount FLOAT COMMENT 'The final total amount charged to passengers, including taxes, tolls, and other fees. Does not include cash tips.',
     passenger_count FLOAT COMMENT 'The number of passengers reported in the vehicle.'
   )
   USING DELTA
-  LOCATION 'abfss://unity-catalog-storage@dbstoragekr4zrn3dm5wo2.dfs.core.windows.net/2279036150228288/raw/nyc_taxi/'
-  COMMENT 'NYC Yellow Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
+  LOCATION 'abfss://raw@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'
+  COMMENT 'NYC Green Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
 """)
 
 # Loading config file 
@@ -30,16 +30,16 @@ with open("/Workspace/Users/arturvieirasousa@gmail.com/ifd-tech-ch/src/config.js
 app_token = conf_file["app_token"]
 start_date = conf_file["start_date"]
 end_date = conf_file["end_date"]
-api_url = conf_file["api_url"]
+api_url = conf_file["api_url_green"]
 
 # Defining limits to the api calls
 batch_size = 50000
 wait_time = 5
 
 # Defining SOQL Query
-order_by = "tpep_pickup_datetime"
-select_clause = "vendorid, passenger_count, total_amount, tpep_pickup_datetime, tpep_dropoff_datetime"
-where_clause = f"tpep_pickup_datetime >= '{start_date}' AND tpep_dropoff_datetime <= '{end_date}'"
+order_by = "lpep_pickup_datetime"
+select_clause = "vendorid, passenger_count, total_amount, lpep_pickup_datetime, lpep_dropoff_datetime"
+where_clause = f"lpep_pickup_datetime >= '{start_date}' AND lpep_dropoff_datetime <= '{end_date}'"
 
 # Fetch Data
 offset = 0
@@ -67,15 +67,15 @@ while True:
         # Converting data types lost during the API call
         ready_to_append = df.withColumnRenamed("VendorID", "vendor_id") \
         .withColumn("vendor_id", col("vendor_id").cast("string")) \
-        .withColumn("tpep_pickup_datetime", col("tpep_pickup_datetime").cast("timestamp")) \
-        .withColumn("tpep_dropoff_datetime", col("tpep_dropoff_datetime").cast("timestamp")) \
+        .withColumn("lpep_pickup_datetime", col("lpep_pickup_datetime").cast("timestamp")) \
+        .withColumn("lpep_dropoff_datetime", col("lpep_dropoff_datetime").cast("timestamp")) \
         .withColumn("total_amount", col("total_amount").cast("float")) \
         .withColumn("passenger_count", col("passenger_count").cast("float"))
         
         # Appending data to both the Data Warehouse and the data lake, to be used as an easy audit source
         ready_to_append.write \
             .mode("append") \
-            .saveAsTable("ifood_db_ws.core.nyc_yellow_taxi_trips")
+            .saveAsTable("ifood_db_ws.core.nyc_green_taxi_trips")
         
         rows_in_batch = len(data_rows)
 
