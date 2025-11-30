@@ -1,5 +1,4 @@
 # Imports
-from pyspark.sql.functions import col, lit, when
 from pyspark.sql.types import StringType, IntegerType, DoubleType
 import pyspark.sql.functions
 
