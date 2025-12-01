@@ -26,7 +26,7 @@ This pipeline was developed with PySpark (with some embedded Spark SQL DDL code 
 In order to reduce the need for external dependencies, which add complexity and unecessary steps to the pipeline's setup, we opted for using only native PySpark libraries. The requirements.txt file present on the root folder 
 
 #### Specificities regarding date range for data extraction
-Complying with the project requirements (see README.md), we worked with a subset of the original data, using only rows generated between January 2023 and May 2023, a date range defined by two parameters in the config file ("start_date" and "end_date"). That setup doesn't allow for scheduled subsequent runs as it is because it would always read the same date range present on the config file. Therefore, if we hipothetically intend to make this extraction dynamic and recurrent, we would have to create an additional resource to dynamically update "start_date" and "end_date" according to business needs.
+Complying with the project requirements (see [README.md](https://github.com/vieirasousa/ifd-tech-ch/blob/main/README.md)), we worked with a subset of the original data, using only rows generated between January 2023 and May 2023, a date range defined by two parameters in the config file ("start_date" and "end_date"). That setup doesn't allow for scheduled subsequent runs as it is because it would always read the same date range present on the config file. Therefore, if we hipothetically intend to make this extraction dynamic and recurrent, we would have to create an additional resource to dynamically update "start_date" and "end_date" according to business needs.
 
 #### High-level design of the flow
 The scripts comprising the flow are orchestrated as tasks, on a Databricks Job, as shown on the high-level design below. Make sure to open the image in a new tab so texts are readable:
@@ -45,7 +45,7 @@ The scripts comprising the flow are orchestrated as tasks, on a Databricks Job, 
 - **nyc_taxi_silver/nyc_taxi_silver.py**: Cleanses data and fixes types separatly for yellow and green taxis, leveraging Spark's parallel processing capabilities. Renames columns to allow for merging the two datasets seamlessly. Writes the result to the *silver.nyc_taxi_silver* Delta table, which reflets both on the Data Lake and the Data Warehouse.
 
 - **nyc_taxi_gold/taxi_trips_by_vendor_date.py**: Cleanses data and fixes types separatly for yellow and green taxis, leveraging Spark's parallel processing capabilities. Renames columns to allow for merging the two datasets into a single one, enrich the result with aggregations and business logics and writes the result to the *gold.taxi_trips_by_vendor_date* dataset.
-*
+
 - **nyc_taxi_ingestion/config.json**: Holds parameters needed for the API calls, which extract data from the source. Fields are self-explanatory.
 
 -------------------------------------------------------------------------
