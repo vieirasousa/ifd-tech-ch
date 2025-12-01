@@ -104,7 +104,40 @@ all_taxis = \
                  )
 
 
-# Printing average passenger count per hour of the day, only for May, considering all taxis in the fleet, both Yellow and Green
+# Printing average passenger count per hour of the day, only for May, considering all taxis in the fleet, both Yellow and Green. Results are as below:
+
+"""
++----+-------------------+                                                      
+|hour|avg_passenger_count|
++----+-------------------+
+|   0| 1.4104099092235018|
+|   1|  1.419182205870056|
+|   2| 1.4356738010818086|
+|   3| 1.4332727560050569|
+|   4|  1.387454981992797|
+|   5| 1.2648380355276907|
+|   6| 1.2352757088314452|
+|   7| 1.2523369307278018|
+|   8|  1.264486200555459|
+|   9| 1.2825327452011925|
+|  10| 1.3176682059069638|
+|  11|  1.333037386103001|
+|  12| 1.3470254957507082|
+|  13|  1.353993686157598|
+|  14|  1.359349801734115|
+|  15| 1.3710267672855625|
+|  16| 1.3695176759486634|
+|  17|  1.362388539500708|
+|  18|   1.35807774486184|
+|  19|  1.368186416249653|
+|  20| 1.3799470161176162|
+|  21| 1.4003806192267367|
+|  22| 1.4100192325304515|
+|  23| 1.4055968191733164|
++----+-------------------+
+
+"""
+
 all_taxis \
     .select("pickup_datetime", "passenger_count") \
     .where(month("pickup_datetime") == 5) \
