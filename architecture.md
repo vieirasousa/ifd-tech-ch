@@ -58,8 +58,8 @@ The scripts comprising the flow are orchestrated as tasks, on a Databricks Job, 
 **Silver dataset:** Built on top of the Core tables, this dataset receives treatment, for null values, for entries which contain errors, and ultimately applying the correct data type definition for the needed columns. It also joins Yellow and Green taxi data, which came from different API endpoints, and had different names for their pickup and dropoff columns. This dataset can be consumed directly by the Analytics team. The treatment stages present on this layer are described below:
 
 * Rows with values lesser then zero on "total_amount" were removed. Those rows indicated some sort of "negative" payments, probably due to errors on the services side.
-* Entries with "tpep_pickup_datetime" greater then "tpep_dropoff_datetime" were removed, as they indicated trips that were finished before they even started.
-* Entries with "tpep_pickup_datetime" equal to "tpep_dropoff_datetime" were removed, as they indicated trips that were started and finished in the exact moment.
+* Entries with pickup datetime greater then dropoff datetime were removed, as they indicated trips that were finished before they even started.
+* Entries with pickup datetime equal to dropoff datetime were removed, as they indicated trips that were started and finished in the exact moment.
 
 We had other suspicious entries, like rows with passenger_count superior to 8 individuals in a single trip, but since we can't indicate for sure if this is a real word possibility, we've kept the data expecting data analystis to verify this.
 
