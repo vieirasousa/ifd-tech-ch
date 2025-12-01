@@ -8,7 +8,7 @@ spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.silver")
 # Creating table, setting descriptions to fill Table and columns metadata for the Databricks SQL Catalog
 spark.sql(f"""
   CREATE TABLE IF NOT EXISTS ifood_db_ws.silver.taxi_trips_refined (
-    vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
+    vendor_id STRING COMMENT 'Code indicating the provider that produced the record.',
     pickup_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was engaged (pickup time).',
     dropoff_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was disengaged (dropoff time).',
     total_amount DOUBLE COMMENT 'The final total amount charged to passengers, including taxes, tolls, and other fees. Does not include cash tips.',

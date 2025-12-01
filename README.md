@@ -52,7 +52,9 @@ As for the data analysis requirements, the script can be found on the *./analysi
 
 Follow the steps below in order to run this pipeline. It is assumed you already have created your ssh credentials and our public ssh key is registered on Github, but in case you don't, follow [this documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
 
-1. In the cloud provider of your choice, create a Databricks instance and Workspace, with Data Warehouse, Unit Catalog capabilities and a pre-created usable Job Cluster.
+We are also assuming you already have a Databricks instance deployed, and all the permissions needed for Databricks to write on a folder inside a cloud storage.
+
+1. Open your Databricks workspace.
 
 2. In the sidebar on the left, select Workspace and then browse to the folder where you want to create the Git repo clone.
 
@@ -62,12 +64,14 @@ Follow the steps below in order to run this pipeline. It is assumed you already 
 
     * Git repository URL: git@github.com:vieirasousa/ifd-tech-ch.git
     * Git provider: GitHub
-    * Git folder name: The name of the folder in your workspace that will contain the contents of the cloned repo
+    * Git folder name: The name of the folder in your workspace that will contain the contents of the cloned repo.
 
-5. Now you have the repo cloned into your Databricks enviroment, click, on the left blade "Jobs & Pipelines".
+5. Adjust the two .py scripts inside ".\nyc_taxi_ingestion\" folder so they will point to your storage location to create the Core table. On both scripts, that definition is in the line 23, in the clause "LOCATION 'abfss://core@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'". Adjust that path to your own.
 
-6. Once in the Jobs & Pipelines area, click on the "Create" button. Define the first task, selecting for Type "Python script", loading "nyc_taxi_ingestion_yellow.py" on the "Path" field, giving it "ingestion_yellow_taxi" as Task name and click on "Save task". On the same screen, following this order, do the same for "nyc_taxi_ingestion_green.py" (changing the Task Name accordingly), for "nyc_taxi_silver.py" and for taxi_trips_by_vendor_date.py.silver
+6. In your Databricks enviroment, click on the left blade "Jobs & Pipelines".
 
-7. Give the Job a proper name clicking on its default name, right above the tabs "Runs" and "Tasks".
+7. Once in the Jobs & Pipelines area, click on the "Create" button. Define the first task, selecting for Type "Python script", loading "nyc_taxi_ingestion_yellow.py" on the "Path" field, giving it "ingestion_yellow_taxi" as Task name and click on "Save task". On the same screen, following this order, do the same for "nyc_taxi_ingestion_green.py" (changing the Task Name accordingly), for "nyc_taxi_silver.py" and for taxi_trips_by_vendor_date.py.silver
 
-8. Click on "Run now" to trigger the Job and its tasks. As mentioned before, this pipeline should not be scheduled for recurrent runs without an additional resource to dynamically change "start_date" and "end_date" in the *config.json* file.
+8. Give the Job a proper name clicking on its default name, right above the tabs "Runs" and "Tasks".
+
+9. Click on "Run now" to trigger the Job and its tasks. As mentioned before, this pipeline should not be scheduled for recurrent runs without an additional resource to dynamically change "start_date" and "end_date" in the *config.json* file.

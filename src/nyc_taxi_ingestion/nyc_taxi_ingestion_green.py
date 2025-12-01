@@ -9,21 +9,23 @@ import time
 spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.core")
 
 # Creating Delta table, setting descriptions to fill Table and columns metadata for the SQL Catalog, and setting the write location to the data lake
+# Mind the storage location to write the table to your data lake path
 spark.sql(f"""
   CREATE TABLE IF NOT EXISTS ifood_db_ws.core.nyc_green_taxi_trips (
-    vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
+    vendor_id STRING COMMENT 'Code indicating the LPEP provider that produced the record.',
     lpep_pickup_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was engaged (pickup time).',
     lpep_dropoff_datetime TIMESTAMP COMMENT 'Timestamp for the moment the meter was disengaged (dropoff time).',
     total_amount FLOAT COMMENT 'The final total amount charged to passengers, including taxes, tolls, and other fees. Does not include cash tips.',
     passenger_count FLOAT COMMENT 'The number of passengers reported in the vehicle.'
   )
   USING DELTA
-  LOCATION 'abfss://core@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'
-  COMMENT 'NYC Green Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
+    -- Change the storage location to your data lake path below
+    LOCATION 'abfss://core@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'
+    COMMENT 'NYC Green Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
 """)
 
 # Loading config file 
-with open("/Workspace/Users/arturvieirasousa@gmail.com/ifd-tech-ch/src/config.json", "r") as f:
+with open("./config.json", "r") as f:
     conf_file = json.load(f)
 
 # Defining parameters
