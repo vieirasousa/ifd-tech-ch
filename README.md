@@ -46,10 +46,11 @@ trip-record-data.page , with the following guidelines:
 Information about the environment needed to run this project, the components, the architecture and decisions made can be found on a separated doc, [architecture.md](https://github.com/vieirasousa/ifd-tech-ch/blob/main/architecture.md "About the architecture for this project").
 
 As for the data analysis requirements, the script can be found on the *./analysis/* folder, and the required libraries for it are on the root *requirements.txt* file.
+
 -------------------------------------------------------------------------
 ## How-to 
 
-Follow the steps below in order to run this pipeline. It is assumed you already have in place your ssh credentials on Github:
+Follow the steps below in order to run this pipeline. It is assumed you already have created your ssh credentials and our public ssh key is registered on Github, but in case you don't, follow [this documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
 
 1. In the cloud provider of your choice, create a Databricks instance and Workspace, with Data Warehouse, Unit Catalog capabilities and a pre-created usable Job Cluster.
 
