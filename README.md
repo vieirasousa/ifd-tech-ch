@@ -50,7 +50,7 @@ As for the data analysis requirements, the script can be found on the *./analysi
 -------------------------------------------------------------------------
 ## How-to 
 
-Follow the steps below in order to run this pipeline. It is assumed you already have created your ssh credentials and our public ssh key is registered on Github, but in case you don't, follow [this documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+Follow the steps below in order to run this pipeline. It is assumed you already have created your ssh credentials and your public ssh key is registered on Github, but in case you don't, follow [this documentation](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
 
 We are also assuming you already have a Databricks instance deployed, and all the permissions needed for Databricks to write on a folder inside a cloud storage.
 
