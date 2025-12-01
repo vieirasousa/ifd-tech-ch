@@ -7,7 +7,7 @@ spark.sql("CREATE SCHEMA IF NOT EXISTS ifood_db_ws.gold")
 
 # Creating table, setting descriptions to fill Table and columns metadata for the SQL Catalog
 spark.sql(f"""
-  CREATE TABLE IF NOT EXISTS ifood_db_ws.gold.yellow_taxi_trips_by_vendor_date (
+  CREATE TABLE IF NOT EXISTS ifood_db_ws.gold.taxi_trips_by_vendor_date (
     vendor_id STRING COMMENT 'Code indicating the TPEP provider that produced the record.',
     trip_date DATE COMMENT 'Date the trip started',
     total_trips INT COMMENT 'Total trips for the vendor on the given date',

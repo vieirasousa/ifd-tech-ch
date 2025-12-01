@@ -18,7 +18,7 @@ spark.sql(f"""
     passenger_count FLOAT COMMENT 'The number of passengers reported in the vehicle.'
   )
   USING DELTA
-  LOCATION 'abfss://raw@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'
+  LOCATION 'abfss://core@ifdchallenge.dfs.core.windows.net/nyc_taxi/green'
   COMMENT 'NYC Green Taxi trip records Dataset. This is a Core table with semi-raw data fetched from the NYC Taxi API, as a number of columns was dropped and we set a start and an end date, creating a subset from the original data. This table will be an audit source for the Data Engineering team, to be used as reference whenever dataset debugging is needed.'
 """)
 
