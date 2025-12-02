@@ -23,7 +23,7 @@ This pipeline was developed with PySpark (with some embedded Spark SQL DDL code 
   * nyc_taxi_gold/nyc_taxi_trips_by_vendor_date.py
 * A config file (config.json) containing API keys and parameters.
 
-In order to reduce the need for external dependencies, which add complexity and unecessary steps to the pipeline's setup, we opted for using only native PySpark libraries. The requirements.txt file present on the root folder 
+In order to reduce the need for external dependencies, which add complexity and unecessary steps to the pipeline's setup, we opted for using only native PySpark libraries installed on Databricks instances. The requirements.txt file present on the root folder is to be used by the analysis script and is not requirement for the ETL pipeline.
 
 #### Specificities regarding date range for data extraction
 Complying with the project requirements (see [README.md](https://github.com/vieirasousa/ifd-tech-ch/blob/main/README.md)), we worked with a subset of the original data, using only rows generated between January 2023 and May 2023, a date range defined by two parameters in the config file ("start_date" and "end_date"). That setup doesn't allow for scheduled subsequent runs as it is because it would always read the same date range present on the config file. Therefore, if we hipothetically intend to make this extraction dynamic and recurrent, we would have to create an additional resource to dynamically update "start_date" and "end_date" according to business needs.
