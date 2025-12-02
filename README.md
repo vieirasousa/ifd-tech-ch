@@ -62,7 +62,7 @@ We are also assuming you already have a Databricks instance deployed, and all th
 
 4. On the Create Git folder dialog box, fill the required fields as below. The remaining fields can be left unfilled:
 
-    * Git repository URL: git@github.com:vieirasousa/ifd-tech-ch.git
+    * Git repository URL: https://github.com/vieirasousa/ifd-tech-ch.git
     * Git provider: GitHub
     * Git folder name: The name of the folder in your workspace that will contain the contents of the cloned repo.
 
