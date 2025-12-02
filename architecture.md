@@ -38,7 +38,7 @@ The scripts comprising the flow are orchestrated as tasks, on a Databricks Job, 
 
 ###### Below we describe the scripts functions inside the pipeline and other specificities.
 
-- **nyc_taxi_ingestion/nyc_taxi_ingestion_yellow.py**: Creates the Core schema (if it doesn't exist), the *core_yellowcore.nyc_yellow_taxi_trips* table definition as a Delta table, makes API calls for the source of Yellow Taxi data, saves the result to a variable and change DataTypes in order to make the data more manageable; ultimately, saves the final result to the Core schema, which also creates delta parquet files on the data lake. It uses pre-querying with “Socrata Query Language” (SoQL) on the API calls to extract only the necessary portion of the original data, considering the project requirements (see README.MD).
+- **nyc_taxi_ingestion/nyc_taxi_ingestion_yellow.py**: Creates the Core schema (if it doesn't exist), the *core_yellowcore.nyc_yellow_taxi_trips* table definition as a Delta table, makes API calls for the source of Yellow Taxi data, saves the result to a variable and change DataTypes in order to make the data more manageable; ultimately, saves the final result to the Core schema, which also creates delta parquet files on the data lake. It uses pre-querying with “Socrata Query Language” (SoQL) on the API calls to extract only the necessary portion of the original data, considering the project requirements (see [README.MD](https://github.com/vieirasousa/ifd-tech-ch/blob/main/README.md)).
 
 - **nyc_taxi_ingestion/nyc_taxi_ingestion_green.py**: Does the same as above, but using as source an endpoint for Green Taxi data.
 
